@@ -2,7 +2,7 @@ package Sem04.Task04;
 
 public class MyStack {
     public class Node{
-        public Node(int v, Node n){
+        private Node(int v, Node n){
             value = v;
             next = n;
         }
