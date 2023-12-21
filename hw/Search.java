@@ -29,11 +29,7 @@ public class Search {
 
                 filters.remove(criteria);
                 sample = filter(catalog);
-                if (sample.isEmpty()== true){
-                    System.out.println("No LapTops are available - remove some filters");
-                    run();
-                    return;
-                }
+                if (isNoLapTops()) return;
                 for(LapTop lt: sample){
                     Integer checked = (Integer)lt.GetSpec().get(criteria);
                     if (checked < min_value){
@@ -67,6 +63,7 @@ public class Search {
                 ArrayList<String> temp_memo = (ArrayList<String>)filters.get(criteria);
                 filters.remove(criteria);
                 sample = filter(catalog);
+                if (isNoLapTops()) return;
                 HashSet<String> options = new HashSet();
                 for(LapTop lt: sample){
                     options.add((String)lt.GetSpec().get(criteria));
@@ -142,11 +139,26 @@ public class Search {
         ans =  new Input().c.nextInt();
         if (ans == 1) {addFilter();return;}
         if (ans == 3) printFilters();
-        if (ans == 4) System.out.println(new Sample(filter(catalog)));
+        if (ans == 4)   {
+            sample = filter(catalog);
+            if (isNoLapTops()) return;
+            System.out.println(new Sample(sample));
+        }
         }
      catch (Exception e){System.out.println("Something went wrong\n");
 }
     }
+    }
+
+
+    public boolean isNoLapTops()
+    {
+        if (sample.isEmpty()== true){
+            System.out.println("No LapTops are available - remove some filters");
+            run();
+            return true;
+        }
+        return false;
     }
 }
 
